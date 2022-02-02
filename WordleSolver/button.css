@@ -1,0 +1,27 @@
+button {
+    height: 30px;
+    width: 60px;
+    outline: none;
+    margin: 10px;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    cursor: pointer;
+}
+
+button.current {
+    box-shadow: 0 0 0 2px white,
+    0 0 0 4px black;
+}
+
+#playButton {
+    background-color: #3a3a3c;
+}
+
+#guessButton {
+    background-color: #c9b458;
+}
+
+#solveButton {
+    background-color: #538d4e;
+}

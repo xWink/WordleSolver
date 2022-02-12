@@ -17,6 +17,9 @@ function solve() {
 
 function guessWord(word) {
     const keys = getKeyboardKeys()
+    if (keys.length === 0) {
+        return alert('Open Wordle in order to solve!')
+    }
     clearGuess(keys)
     for (let letter of word) {
         clickKey(keys, letter)
@@ -40,7 +43,7 @@ function getKeyboardKeys() {
         ?.querySelector('#keyboard')
         ?.querySelectorAll('div')
 
-    return Array.from(keyboardRows)
+    return Array.from(keyboardRows || [])
         .flatMap(row => Array.from(row?.querySelectorAll('button')))
 }
 

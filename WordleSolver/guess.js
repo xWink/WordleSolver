@@ -8,12 +8,7 @@ function guess() {
     const absentLetters = getLetters(gameRows, 'absent')
     const regex = generateRegex(correctLetters, presentLetters, absentLetters)
     withAllPossibleAnswers(answers => {
-        const possibleAnswers = []
-        answers.forEach(answer => {
-            if (answer.match(regex)) {
-                possibleAnswers.push(answer)
-            }
-        })
+        const possibleAnswers = answers.filter(answer => answer.match(regex))
         const word = possibleAnswers[Math.floor(Math.random() * possibleAnswers.length)]
         guessWord(word)
     })
@@ -56,16 +51,16 @@ function getEvaluatedGameRows() {
         ?.querySelector('#board')
         ?.querySelectorAll('game-row')
 
-    return Array.from(gameRows)
+    return Array.from(gameRows || [])
         .filter(gameRow => isEvaluated(gameRow))
 }
 
 // Get first letter of a row and check if it has an evaluation
 function isEvaluated(gameRow) {
-    const evaluation = gameRow.shadowRoot
-        .querySelector('.row')
-        .querySelector('game-tile')
-        .getAttribute('evaluation')
+    const evaluation = gameRow?.shadowRoot
+        ?.querySelector('.row')
+        ?.querySelector('game-tile')
+        ?.getAttribute('evaluation')
 
     return evaluation !== undefined && evaluation !== null
 }
@@ -105,6 +100,9 @@ function withAllPossibleAnswers(callback) {
 
 function guessWord(word) {
     const keys = getKeyboardKeys()
+    if (keys.length === 0) {
+        return alert('Open Wordle in order to guess!')
+    }
     clearGuess(keys)
     for (let letter of word) {
         clickKey(keys, letter)
@@ -128,7 +126,7 @@ function getKeyboardKeys() {
         ?.querySelector('#keyboard')
         ?.querySelectorAll('div')
 
-    return Array.from(keyboardRows)
+    return Array.from(keyboardRows || [])
         .flatMap(row => Array.from(row?.querySelectorAll('button')))
 }
 

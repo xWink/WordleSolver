@@ -8,14 +8,14 @@ function guess() {
     const absentLetters = getLetters(gameRows, 'absent')
     const regex = generateRegex(correctLetters, presentLetters, absentLetters)
     withAllPossibleAnswers(answers => {
-        const possibleAnswers = answers.filter(answer => answer.match(regex))
+        const possibleAnswers = answers.filter(answer => answer.match(regex) && presentLetters.every(letter => answer.includes(letter.letter)))
         const word = possibleAnswers[Math.floor(Math.random() * possibleAnswers.length)]
         guessWord(word)
     })
 }
 
 function generateRegex(correctLetters, presentLetters, absentLetters) {
-    const allowedChars = '[abcdefghijklmopqrstuvwxyz]'
+    const allowedChars = '[abcdefghijklmnopqrstuvwxyz]'
     let regexElements = [allowedChars, allowedChars, allowedChars, allowedChars, allowedChars]
 
     for (let presentLetter of presentLetters) {
@@ -30,6 +30,7 @@ function generateRegex(correctLetters, presentLetters, absentLetters) {
         } else {
             // Remove from all indices
             for (let i = 0; i < regexElements.length; i++) {
+                console.log(absentLetter.letter)
                 regexElements[i] = regexElements[i].replace(absentLetter.letter, '')
             }
         }

@@ -1,14 +1,14 @@
 {
   "name": "Wordle Solver",
   "description": "Get accurate guesses or instantly solve the puzzle with a single button",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
   },
   "permissions": ["storage", "activeTab", "scripting"],
   "host_permissions": [
-    "https://www.powerlanguage.co.uk/wordle/"
+    "https://www.nytimes.com/games/wordle/index.html"
   ],
   "action": {
     "default_popup": "popup.html",
